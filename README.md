@@ -11,7 +11,6 @@
 ![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![Pandas](https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white)
 ![Scikit-Learn](https://img.shields.io/badge/Scikit_Learn-F79939?style=for-the-badge&logo=scikit-learn&logoColor=white)
-![XGBoost](https://img.shields.io/badge/XGBoost-EB2A12?style=for-the-badge&logo=xgboost&logoColor=white)
 ![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)
 ![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)
 
@@ -22,9 +21,8 @@
 ## 📌 목차 (Table of Contents)
 1. [프로젝트 설계](#1-프로젝트-설계)
 2. [데이터 전처리 및 EDA](#2-데이터-전처리-및-eda)
-3. [모델링](#3-모델링)
+3. [모델링 및 결과 해석](#3-모델링)
 4. [Streamlit 앱 개발](#4-streamlit-앱-개발)
-5. [모델 평가 및 해석](#5-모델-평가-및-해석)
 
 <br/>
 
@@ -127,21 +125,10 @@
 
 ---
 
-## 3. 모델링
+## 3. 모델링 및 결과 해석
 
 ### 🤖 모델 후보 선정
 고객 이탈 예측을 위한 다양한 알고리즘을 비교 및 검증했습니다.
-* **Basic XGBoost**: 기본 파라미터 적용 베이스라인 모델
-* **GridSearchCV XGBoost**: 하이퍼파라미터 격자 탐색 적용
-* **RandomizedSearchCV XGBoost**: 무작위 하이퍼파라미터 조합 탐색으로 최적화
 
 ### ⚙️ 하이퍼파라미터 튜닝
-`RandomizedSearchCV`를 통해 탐색한 최적 하이퍼파라미터 세팅:
-```python
-param_distributions = {
-    'n_estimators': 357,
-    'max_depth': 7,
-    'learning_rate': 0.140,
-    'subsample': 0.76,
-    'colsample_bytree': 0.65
-}
+
