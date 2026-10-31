@@ -95,11 +95,15 @@
 | `booking_changes` | 예약 확정 후 체크인 전까지의 변경 횟수 | **제거** | 예약 이후 발생하는 변화를 담고 있어 예측 시점의 정보에 위배 |
 | `required_car_parking_spaces` | 주차 공간 요청 수 (취소율 0%) | **제거** | 데이터 패턴 상 체크인 때 현장에서 기록된 값으로 판단되어 누수 방지를 위해 배제 |
 
-### 💡 핵심 EDA 인사이트 요약
+### 💡 핵심 EDA
 - **예약 기간 (`lead_time`)**: 예약 후 체크인까지의 기간이 길어질수록 취소율이 계단식으로 증가 (1주 이내 9.6% → 1년 초과 67.7%)
+<img width="1080" height="645" alt="image" src="https://github.com/user-attachments/assets/0894b4fc-4101-4eb7-904c-2306672ac83a" />
 - **보증금 유형 (`deposit_type`)**: 환불 불가(Non Refund) 조건의 취소율이 99.4%에 달하나, 이는 여행사·단체가 미리 잡아둔 블록 물량이 일괄 취소되는 패턴에 기인함
+<img width="1080" height="397" alt="image" src="https://github.com/user-attachments/assets/0eb6ab90-f6a9-4131-bd12-9741b1d846e2" />
 - **국적 (`country`)**: 포르투갈 국내 고객의 취소율(56.6%)이 해외 고객(23.6%)의 2배 이상을 기록
+<img width="1080" height="315" alt="image" src="https://github.com/user-attachments/assets/3ef4c947-f6c2-4eee-9e62-75741cf1af96" />
 - **특별 요청 사항**: 특별 요청이 1개 이상 있는 경우 취소율이 눈에 띄게 감소 (0개 47.7% vs 1개 이상 16~22%)
+<img width="1080" height="480" alt="image" src="https://github.com/user-attachments/assets/7de1066c-5668-4227-93c4-3d1ef01dab5d" />
 <br/>
 
 ---
