@@ -78,6 +78,8 @@
 | `agent` | 16,340건 (13.7%) | `"Unknown"`으로 대체 (여행사 없음) | 여행사 번호는 크기의 의미가 없는 이름표이므로 글자(범주)로 처리 |
 | `company` | 112,593건 (94.3%) | `has_company` (있음 1 / 없음 0) 파생 변수 생성 후 원본 삭제 | 값 대부분이 비어 있어 번호 자체보다는 회사 예약 여부 자체가 의미 있음 |
 
+<br/>
+
 **[이상값 처리]**
 | 대상 항목 | 진단 내용 및 상태 | 처리 방법 (Action) | 처리 근거 및 상세 내용 |
 | :--- | :--- | :--- | :--- |
@@ -85,11 +87,15 @@
 | 1박 요금 (`adr`) | 음수 값 (1건), 5,000 이상 극단값 (1건) | **제거** | 숙박 요금이 음수일 수 없고, €5,400 등 혼자 튀는 값은 입력 오류로 판단 |
 | 0박 예약 | 체류 일수가 0인 경우 (715건) | **유지** | 당일 이용(Day-use) 등 실제 예약일 수 있으므로 일괄 삭제 시 패턴 왜곡 방지 |
 
+<br/>
+
 **[중복 행 처리]**
 | 항목 | 진단 내용 및 상태 | 처리 방법 (Action) | 처리 근거 및 상세 내용 |
 | :--- | :--- | :--- | :--- |
 | 전체 데이터 | 완전히 같은 행 31,994행 (26.8%) | **삭제하지 않고 유지** | 단체 및 여행사에서 같은 조건으로 여러 객실을 한꺼번에 예약한 실제 상황으로 판단 |
 | 동일 입력 그룹 | 같은 입력값끼리 묶인 84,668개 그룹 | `group_id` 부여 및 그룹 단위 분할 적용 | 동일 그룹이 Train과 Test에 나뉘어 데이터 누수가 발생하는 것을 방지 (`StratifiedGroupKFold`) |
+
+<br/>
 
 **[누수 컬럼 제거]**
 | 대상 컬럼 | 진단 내용 및 상태 | 처리 방법 (Action) | 처리 근거 및 상세 내용 |
@@ -99,6 +105,20 @@
 | `assigned_room_type` | 체크인할 때 실제로 배정된 객실 | **제거** | 예약 확정 시점에는 알 수 없는 체크인 이후의 정보 |
 | `booking_changes` | 예약 확정 후 체크인 전까지의 변경 횟수 | **제거** | 예약 이후 발생하는 변화를 담고 있어 예측 시점의 정보에 위배 |
 | `required_car_parking_spaces` | 주차 공간 요청 수 (취소율 0%) | **제거** | 데이터 패턴 상 체크인 때 현장에서 기록된 값으로 판단되어 누수 방지를 위해 배제 |
+
+<br/>
+
+**[관리용 컬럼 추가]**
+| 단계 | 원본 행 번호 | 그룹 번호 | train/test 표시 |
+| :--- | :--- | :--- | :--- |
+| 관리용 컬럼 생성 | `source_row_id` 추가 (예약번호가 없어 원본 추적용) | 입력값이 모두 같은 행을 묶어 `group_id` 부여 | `split` 컬럼 (약 80/20 비율로 train/test 지정)|
+
+<br/>
+
+**[파생 변수]**
+| 단계 | 파생 변수 내용 |
+| :--- | :--- |
+| 특성 공학 및 변수 가공 | • `total_guests` (성인 + 어린이 + 유아 합산 인원)<br/>• `total_nights` (주말 박 + 평일 박 합산 체류 일수) |
 
 <br/>
 
@@ -214,7 +234,7 @@
 - **상세 내용**: 
   - 관리 중인 호텔 정보, 학습 데이터 기간, 총 예약 건수 및 적용된 예측 모델 정보 요약 제공
   - 사용자의 원활한 플랫폼 이용을 위해 하위 메뉴별 핵심 기능 안내 및 시스템 활용 가이드(사용 순서, 판단 기준) 제공
-<img width="1900" height="856" alt="1" src="https://github.com/user-attachments/assets/f62ab802-c7ef-47ca-81d8-6fe51256bf6e" />
+<img width="1915" height="852" alt="1" src="https://github.com/user-attachments/assets/55cf0b90-b951-4936-a432-3850a83525fc" />
 
 <br/>
 
@@ -223,8 +243,8 @@
 - **상세 내용**:
   - 총 체크인 예정 예약, 취소 위험 높음 건수, 예상 취소 건수 및 취소 시 영향 매출액을 상단 지표 카드로 시각화
   - 날짜별 체크인 예약 분포 및 위험 등급별(높음·보통·낮음) 현황 그래프를 제공하여 취소가 집중되는 시기를 파악하고 선제적으로 대응할 수 있도록 지원
-<img width="1895" height="851" alt="2" src="https://github.com/user-attachments/assets/a5579fb9-8993-4d88-8c8d-e25f2fd7fdc9" />
-<img width="1892" height="835" alt="3" src="https://github.com/user-attachments/assets/8d7f4bf7-2468-467c-a6a3-e87813460118" />
+<img width="1912" height="857" alt="2" src="https://github.com/user-attachments/assets/805443fc-967e-47a2-b71b-d22fb19dd500" />
+<img width="1910" height="840" alt="3" src="https://github.com/user-attachments/assets/3c565370-cf58-4b20-898c-204cf3bd6bce" />
 
 <br/>
 
@@ -234,8 +254,8 @@
   - 위험 등급(높음/보통/낮음), 호텔 종류, 예약 경로, 예약번호 검색 등 다양한 필터 옵션을 제공
   - 각 예약 건별 취소 확률, 위험 등급뿐만 아니라 취소 가능성을 높이거나 낮추는 주요 요인(`주요 요인` 컬럼)을 함께 제공하여 구체적인 근거 파악 가능
   - 조회된 결과는 CSV 파일로 내보내기(다운로드) 기능
-<img width="1906" height="857" alt="4" src="https://github.com/user-attachments/assets/030c93f6-8217-4be6-ab3a-c39d625f332e" />
-<img width="1885" height="850" alt="5" src="https://github.com/user-attachments/assets/41a0263d-3202-4db0-9b60-476543a427ad" />
+<img width="1917" height="847" alt="4" src="https://github.com/user-attachments/assets/c056fe23-b560-4ff5-869c-b3a90fec259d" />
+<img width="1917" height="857" alt="5" src="https://github.com/user-attachments/assets/fa490e52-4005-43a7-84e7-076b6dc772ac" />
 
 <br/>
 
@@ -245,25 +265,42 @@
   - **단체·여행사 블록**: 동일한 여행사 및 체크인 날짜에 위험 높음 예약이 5건 이상인 오프라인/단체 예약 건을 묶어 명단 확정 요청 등 대량 관리 기능 제공
   - **개인 고객**: 체크인 임박 고객 중 위험도가 높은 고객을 대상으로 연락 기한(예: 체크인 7일 전)이 빠른 순으로 정렬하여 리마인드 및 숙박 확인 안내 지원
   - 연락 리스트는 CSV 파일로 다운로드 가능
-<img width="1906" height="857" alt="6" src="https://github.com/user-attachments/assets/ac5ffac2-5012-44a8-a341-65995e9d1dfc" />
+<img width="1915" height="852" alt="6" src="https://github.com/user-attachments/assets/fd930e7d-0b3b-493c-b2ee-fd2facd94a65" />
+<img width="1915" height="850" alt="7" src="https://github.com/user-attachments/assets/0621f612-d62d-45c2-84aa-6cff55874f4e" />
 
 <br/>
 
 ### ⑤ 프로모션 대상 (Promotion Targets)
 - **주요 기능**: 취소 위험이 높은 개인 고객을 대상으로 체크인 확정 리워드(웰컴 드링크, 포인트) 및 보증금 안내 문자를 발송하는 마케팅 자동화 기능
 - **상세 내용**:
-  - **체크인 확정 리워드**: 예약~체크인 기간에 따른 차등 포인트(180일 이상 30,000포인트 등) 및 웰컴 드링크 잔 수를 자동으로 계산하여 리워드 대상자 목록 조회
-  - **리워드 및 보증금 안내 문자**: 대상 고객별 맞춤형 문자 내용을 미리보기 및 수정하고, '문자 발송 (시뮬레이션)' 버튼을 통해 실제 발송 형태를 테스트 및 검증 가능
-<img width="1887" height="845" alt="7" src="https://github.com/user-attachments/assets/e59648a8-478f-4fca-8ecd-47053453b742" />
-<img width="1897" height="842" alt="8" src="https://github.com/user-attachments/assets/e1792b81-c3d8-48df-a04e-7fe5b7b73757" />
-<img width="1901" height="845" alt="9" src="https://github.com/user-attachments/assets/91df90ed-5478-4434-8e56-323d807501d0" />
+  - **탭 구성**: '체크인 확정 리워드'와 '보증금 안내 문자' 탭으로 나누어 대상자 목록 및 맞춤 안내 문자 관리 가능
+  - **체크인 확정 리워드**: 
+    - 발송 대상: 체크인 14일 전, 위험 높음 개인 고객
+    - 혜택 내용: 체크인 확정 시 무료 웰컴 드링크(1인 1잔) + 포인트 적립 (1포인트 = 1원, 체크인 시 지급)
+    - 포인트 계산 방식: 예약~체크인 기간이 180일 이상인 경우 30,000포인트(취소가 특히 많은 구간이라 높게 책정), 180일 미만인 경우 `기간 × 100포인트`로 자동 계산
+  - **보증금 안내 문자**: 
+    - 발송 대상: 위험 높음 예약 중 보증금이 없는 예약 고객 (예: 107건)
+    - 안내 내용: 예약 확정을 위해 보증금 100,000원 납부 안내 및 입금 확인 후 최종 확정 처리
+  - **문자 발송 시뮬레이션**: '한 명식' 또는 '대상 전체'를 선택하여 맞춤형 문자 내용 미리보기·수정, '문자 발송 (시뮬레이션)'을 통해 발송 형태 테스트 및 검증 가능
+<img width="1917" height="862" alt="8" src="https://github.com/user-attachments/assets/8243e3aa-3737-4e49-bc23-d5977f5d2b5a" />
+<img width="1917" height="855" alt="9" src="https://github.com/user-attachments/assets/0f1bfebb-032d-41c1-b7c5-af4962db06c3" />
+<img width="1917" height="851" alt="10" src="https://github.com/user-attachments/assets/f084e887-d556-4aa5-b669-9bce2cb45d97" />
+<img width="1917" height="842" alt="11" src="https://github.com/user-attachments/assets/b3d120b9-4c8e-4c6b-af53-e8f6e6c4413c" />
 
 <br/>
 
 ### ⑥ 새 예약 예측 (New Reservation Prediction)
 - **주요 기능**: 새로운 예약 정보(숙박 일수, 요금, 인원, 예약 경로 등)를 직접 입력하여 실시간으로 취소 확률 및 위험 등급 예측
 - **상세 내용**:
-  - 입력된 예약 건의 최종 취소 확률과 위험 등급(높음/보통/낮음)을 즉시 계산 후 시각화
-  - 해당 예측 결과에 가장 큰 영향을 미친 주요 요인들을 분석하여 제공
-  - '이렇게 바뀌면?' 시뮬레이션 기능을 통해 특별 요청 사항이나 예약~체크인 기간 등의 조건을 변경했을 때 취소 확률이 어떻게 변동되는지 비교하여 최적의 대안 추천
-<img width="1886" height="847" alt="10" src="https://github.com/user-attachments/assets/b988785b-8e0c-4617-8d3f-5b5c6cead37d" />
+  - **예약 정보 입력**: 숙박 조건(호텔, 체크인 날짜, 예약한 날 등) 및 예약 경로·고객 정보를 상세히 입력
+    - **예약한 날(체크인 2년 전까지)**: 최대 체크인 날짜와 예약 날짜의 간격이 737일인 점을 고려하여 최대 2년(730일)까지 예약한 날짜를 선택할 수 있도록 설계
+  - **예약 날짜 유효성 검사 (에러 메시지 처리)**:
+    - 예약~체크인 기간이 최대 2년(730일)을 초과할 경우: *"예약~체크인 기간은 최대 2년(730일)까지만 예측할 수 있어요. 지금 OO일이에요. 예약한 날을 체크인 날과 더 가깝게 바꿔 주세요."*라는 에러 메시지 출력
+    - 예약한 날이 체크인 날짜보다 늦을 경우(과거가 아닐 경우): *"예약한 날이 체크인 날짜보다 늦어요. 날짜를 확인해 주세요."*라는 에러 메시지를 출력합니다
+  - **예측 결과 및 주요 요인**: 입력된 예약 건의 최종 취소 확률과 위험 등급(높음/보통/낮음)을 즉시 계산하고 시각화하며, 예측 결과에 가장 큰 영향을 미친 주요 요인들을 분석하여 제공
+  - **이렇게 바뀌면? (시뮬레이션)**: 특별 요청 사항이나 예약~체크인 기간 등의 조건을 변경했을 때 취소 확률이 어떻게 변동되는지 비교하여 최적의 대안 추천
+  - **권장 대응**: 예측된 위험도에 따라 체크인 7일 전 숙박 확인 안내 발송, 객실·식사 요청사항 입력 안내, 여행사 예약 유지 확인 등의 실무 대응 가이드를 함께 제공
+<img width="1917" height="857" alt="12" src="https://github.com/user-attachments/assets/c6481262-f420-4254-b353-d2c9362a3f35" />
+<img width="1917" height="847" alt="13" src="https://github.com/user-attachments/assets/03a0de5a-5fe1-41e7-b4bf-ec17af2d015c" />
+<img width="1917" height="860" alt="14" src="https://github.com/user-attachments/assets/a31c6bd3-aa10-4667-a510-370425e05395" />
+<img width="1917" height="857" alt="15" src="https://github.com/user-attachments/assets/a551cf20-4b02-4084-a7cd-7e8aeb47b73a" />
