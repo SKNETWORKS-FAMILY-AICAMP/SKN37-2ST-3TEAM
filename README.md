@@ -189,7 +189,7 @@
 
 ### ④ XGBoost
 * **최적 설정**: `n_estimators=357`, `max_depth=7`, `learning_rate=0.1402`, `colsample_bytree=0.6571`, `subsample=0.6571` (평가용 데이터 성능 - Accuracy: $0.8644$, ROC-AUC: $0.9407$)
-* **설명**: `StratifiedGroupKFold` 교차 검증과 `logloss` 평가지표를 적용한 `RandomizedSearchCV`를 통해 학습률, 트리 최대 깊이, 샘플링 비율 등을 최적화하였으며, 이를 통해 그래디언트 부스팅 모델의 과적합을 효과적으로 억제하고 예측 성능 극대화
+* **설명**: `StratifiedGroupKFold` 교차 검증과 `logloss` 평가지표를 적용한 `RandomizedSearchCV`를 통해 학습률, 트리 최대 깊이, 샘플링 비율 등을 최적화하였으며, 이를 통해 과적합을 효과적으로 억제하고 예측 성능 극대화
 
 ### ⑤ Stacking A
 * **최적 설정**: Base Models (XGBoost + Random Forest + Logistic Regression) + Meta-Model 조합   
