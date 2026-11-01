@@ -127,7 +127,7 @@
 
 ## 3. 모델링 및 결과 해석
 
-### 사용 모델 및 최종 모델 선정 방식
+### 1. 사용 모델 및 최종 모델 선정 방식
 - **사용 모델 (5종)**: 로지스틱 회귀 (Logistic Regression), 결정 트리 (Decision Tree), 랜덤 포레스트 (Random Forest), XGBoost, Stacking
 - **모델 평가 지표**: 모델별 예측 성능과 변별력을 다각도로 검증하기 위해 Accuracy, Precision, Recall, F1-score, ROC-AUC 지표를 활용하여 가장 높은 성능을 가진 모델을 최종 모델로 선정
 ---
