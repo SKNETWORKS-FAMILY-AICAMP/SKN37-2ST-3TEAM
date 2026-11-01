@@ -127,8 +127,58 @@
 
 ## 3. 모델링 및 결과 해석
 
-### 🤖 모델 후보 선정
-고객 이탈 예측을 위한 다양한 알고리즘을 비교 및 검증했습니다.
+### 사용 모델 및 최종 모델 선정 방식
+- **사용 모델 (5종)**: 결정 트리 (Decision Tree), 로지스틱 회귀 (Logistic Regression), 랜덤 포레스트 (Random Forest), XGBoost, Stacking
+- **모델 평가 지표**: 모델별 예측 성능과 변별력을 다각도로 검증하기 위해 Accuracy, Precision, Recall, F1-score, ROC-AUC 지표를 활용하여 가장 높은 성능을 가진 모델을 최종 모델로 선정
+---
 
-### ⚙️ 하이퍼파라미터 튜닝
+### 2. 모델별 하이퍼파라미터 튜닝 및 최적화
+각 모델별로 담당자를 배정하여 `RandomizedSearchCV` 및 `GridSearchCV`를 통해 하이퍼파라미터 튜닝을 거쳐 최적의 설정값을 탐색
 
+### ② 로지스틱 회귀 (Logistic Regression)
+* **최적 설정**: `StandardScaler` + `log1p`(치우친 5개 수치형 컬럼) + L1 규제, $C = 0.114$, `class_weight='balanced'`, 임계값 $0.45$   
+* **설명**: 다중공선성이 우려되는 파생변수를 제외하고 치우친 수치형 변수에 로그 변환을 적용한 뒤 L1 규제를 통해 성능 개선
+
+### ① 결정 트리 (Decision Tree)
+* **최적 설정 및 튜닝**: `max_depth=10`, `min_samples_split=5`, `min_samples_leaf=4`, `criterion='gini'`
+* **설명**: 단일 트리의 복잡도를 제어하여 과적합을 방지하고자 최대 깊이와 리프 노드의 최소 샘플 수를 제한하여 최적의 파라미터 도출
+
+### ③ 랜덤 포레스트 (Random Forest)
+* **최적 설정**:
+  * 베이스 모델 설정: `n_estimators=50`, `max_depth=18`, `min_samples_leaf=2`, `max_features="sqrt"`
+  * 고도화 최적 파라미터 (`RandomizedSearchCV`): `max_depth=10`, `min_samples_leaf=1` (교차 검증 최고 ROC-AUC: $0.9064$)
+* **설명**: `StratifiedGroupKFold`를 활용하여 학습과 테스트 데이터 간의 그룹 중복을 방지하고, 학습 데이터 내부의 그룹 기반 교차 검증을 통해 과적합을 억제하면서 안정적인 비선형 패턴을 학습하도록 최적의 하이퍼파라미터 탐색
+
+### ④ XGBoost
+* **최적 설정**: `n_estimators=357`, `max_depth=7`, `learning_rate=0.1402`, `colsample_bytree=0.6571`, `subsample=0.6571` (평가용 데이터 성능 - Accuracy: $0.8644$, ROC-AUC: $0.9407$)
+* **설명**: `StratifiedGroupKFold` 교차 검증과 `logloss` 평가지표를 적용한 `RandomizedSearchCV`를 통해 학습률, 트리 최대 깊이, 샘플링 비율 등을 최적화하였으며, 이를 통해 그래디언트 부스팅 모델의 과적합을 효과적으로 억제하고 예측 성능 극대화
+
+### ⑤ Stacking A
+* **최적 설정**: Base Models (XGBoost + Random Forest + Logistic Regression) + Meta-Model 조합   
+* **설명**: 트리 기반 앙상블 모델들과 선형 모델(Logistic Regression)의 예측 확률값들을 베이스 피처로 결합하여 메타 모델이 학습하도록 구성
+
+### ⑥ Stacking B
+* **최적 설정**: Base Models (XGBoost + Random Forest + MLP) + Meta-Model 조합
+* **설명**: 강력한 트리 앙상블 모델들과 다층 인공신경망(MLP)의 예측 확률값들을 베이스 피처로 활용하여, 메타 모델이 최종 예측의 시너지를 극대화하도록 구성
+
+---
+
+### 3. 최종 모델 성능 비교 및 결과 해석
+첨부된 성능 비교 데이터를 반영하여 모델별 지표를 정리한 결과입니다.
+
+#### 📊 모델별 성능 비교 요약표
+
+| 모델 | 담당자 | Accuracy | Precision | Recall | F1-score | ROC-AUC |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: |
+| **Logistic Regression** | 강유나 | 0.8086 | 0.7080 | 0.8234 | 0.7614 | 0.9006 |
+| **Decision Tree** | 윤성민 | 0.8373 | 0.8123 | 0.7299 | 0.7689 | 0.9159 |
+| **Random Forest** | 오원아 | 0.7892 | 0.9609 | 0.4498 | 0.6128 | 0.9095 |
+| **XGBoost** | 손혜민 | 0.8644 | 0.8514 | 0.7685 | 0.8078 | 0.9407 |
+| **Stacking B** | 한승아 | **0.8658** | **0.8493** | **0.7755** | **0.8108** | **0.9402** |
+| **Stacking A** | 한승아 | 0.8650 | 0.8501 | 0.7710 | 0.8085 | 0.9395 |
+
+---
+
+### 🔍 최종 결과 인사이트
+1. **정확도(Accuracy) 및 전반적 성능 우위 (Stacking B)**: Stacking B 모델은 정확도($0.8658$), 재현율($0.7755$), F1-score($0.8108$) 부문에서 전반적으로 가장 균형 잡히고 높은 수치를 기록하며 최종적으로 우수한 성능 입증
+2. **앙상블 시너지를 통한 안정성 확보**: Stacking A와 Stacking B 모두 단일 모델들의 단점을 보완하고 지표 전반에서 안정적인 고성능을 도출해 냄으로써, 복잡한 호텔 예약 데이터 특성에 앙상블 기법이 효과적이었음을 확인
