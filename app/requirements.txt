@@ -1,0 +1,6 @@
+streamlit>=1.37
+pandas>=2.1
+scikit-learn
+joblib
+# 스태킹 B 모델(XGBoost 포함)용
+xgboost

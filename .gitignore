@@ -1,0 +1,19 @@
+# 모델 파일: 용량이 커서(219MB) 깃허브에 올리지 않음 → README의 구글 드라이브 링크로 공유
+*.joblib
+
+# 파이썬 · 주피터가 자동으로 만드는 파일
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# 개인 설정 · 개인 연습 파일
+.vscode/
+practice.ipynb
+
+# 운영체제가 만드는 파일
+.DS_Store
+__MACOSX/
+Thumbs.db
+
+# 비밀 정보 (혹시 생기면)
+.env
