@@ -128,18 +128,18 @@
 ## 3. 모델링 및 결과 해석
 
 ### 사용 모델 및 최종 모델 선정 방식
-- **사용 모델 (5종)**: 결정 트리 (Decision Tree), 로지스틱 회귀 (Logistic Regression), 랜덤 포레스트 (Random Forest), XGBoost, Stacking
+- **사용 모델 (5종)**: 로지스틱 회귀 (Logistic Regression), 결정 트리 (Decision Tree), 랜덤 포레스트 (Random Forest), XGBoost, Stacking
 - **모델 평가 지표**: 모델별 예측 성능과 변별력을 다각도로 검증하기 위해 Accuracy, Precision, Recall, F1-score, ROC-AUC 지표를 활용하여 가장 높은 성능을 가진 모델을 최종 모델로 선정
 ---
 
 ### 2. 모델별 하이퍼파라미터 튜닝 및 최적화
 각 모델별로 담당자를 배정하여 `RandomizedSearchCV` 및 `GridSearchCV`를 통해 하이퍼파라미터 튜닝을 거쳐 최적의 설정값을 탐색
 
-### ② 로지스틱 회귀 (Logistic Regression)
+### ① 로지스틱 회귀 (Logistic Regression)
 * **최적 설정**: `StandardScaler` + `log1p`(치우친 5개 수치형 컬럼) + L1 규제, $C = 0.114$, `class_weight='balanced'`, 임계값 $0.45$   
 * **설명**: 다중공선성이 우려되는 파생변수를 제외하고 치우친 수치형 변수에 로그 변환을 적용한 뒤 L1 규제를 통해 성능 개선
 
-### ① 결정 트리 (Decision Tree)
+### ② 결정 트리 (Decision Tree)
 * **최적 설정 및 튜닝**: `max_depth=10`, `min_samples_split=5`, `min_samples_leaf=4`, `criterion='gini'`
 * **설명**: 단일 트리의 복잡도를 제어하여 과적합을 방지하고자 최대 깊이와 리프 노드의 최소 샘플 수를 제한하여 최적의 파라미터 도출
 
