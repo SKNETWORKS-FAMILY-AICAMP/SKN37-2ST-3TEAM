@@ -242,6 +242,8 @@
 | PR-AUC | 0.9097 | 0.9139 | 0.9145 |
 | Brier Score ↓ | 0.0987 | 0.0970 | 0.0958 |
 
+<img width="691" height="226" alt="image" src="https://github.com/user-attachments/assets/9664e1bf-edd4-42e3-a73e-bdbced426342" />
+
 
 **검증 결과 및 해석**
 
