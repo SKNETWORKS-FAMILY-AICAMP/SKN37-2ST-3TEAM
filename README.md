@@ -3,6 +3,7 @@
 # 🏨 고객 이탈 예측 서비스 (Customer Churn Prediction App)
 
 > **호텔 예약 취소 및 고객 이탈 가능성을 예측하고, 데이터 기반의 리텐션 전략을 제안하는 Streamlit 웹 애플리케이션 서비스입니다.**
+<br/>
 url: https://stayguard.streamlit.app/
 
 <br/>
