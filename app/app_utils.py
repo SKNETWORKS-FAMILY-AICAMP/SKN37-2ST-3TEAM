@@ -171,12 +171,16 @@ def _joblib_load(path):
         xgb.Booster.__setstate__ = original
 
 def load_model(model_path=MODEL_PATH):
+    print("모델 경로:", model_path)
+    print("파일 존재:", Path(model_path).exists())
+    print("파일 크기:", Path(model_path).stat().st_size)
+    print("ZIP 정상 여부:", zipfile.is_zipfile(model_path))
+
     with zipfile.ZipFile(model_path, "r") as zf:
         with tempfile.TemporaryDirectory() as tmp:
             path = zf.extract("best_stacking_modelB2.joblib", tmp)
             obj = joblib.load(path)
 
-    # 스태킹 딕셔너리를 예측 가능한 모델 객체로 변환
     if isinstance(obj, dict) and "base_models" in obj:
         return StackingModel(obj)
 
