@@ -231,7 +231,30 @@
 
 ---
 
-## 4. Streamlit 앱 개발 (호텔 예약 관리 시스템)
+## 4. Stacking 과적합(Overfitting) 여부 검증
+
+최종 선정 모델인 Stacking B의 학습용(Train), 검증용(Validation), 평가용(Test) 데이터 성능을 비교하여 과적합 가능성을 점검했습니다.
+
+| 평가 지표 | Train | Validation | Test |
+|---|---:|---:|---:|
+| Accuracy | 0.8620 | 0.8611 | 0.8658 |
+| F1-score | 0.8071 | 0.8042 | 0.8108 |
+| ROC-AUC | 0.9364 | 0.9397 | 0.9402 |
+| PR-AUC | 0.9097 | 0.9139 | 0.9145 |
+| Brier Score ↓ | 0.0987 | 0.0970 | 0.0958 |
+
+<img width="684" height="214" alt="image" src="https://github.com/user-attachments/assets/92ae9dc7-eb94-4f9c-a2c2-001f2a27cb9d" />
+
+
+**검증 결과 및 해석**
+
+- **성능 차이 분석:** Train, Validation, Test의 ROC-AUC가 각각 0.9364, 0.9397, 0.9402로 유사하게 나타났으며, F1-score와 PR-AUC 역시 안정적으로 유지되었습니다.
+- **과적합 완화 방법:** StratifiedGroupKFold를 통한 그룹 기반 교차검증과 OOF 예측값을 활용한 Stacking 학습으로 데이터 누수 및 과적합 위험을 줄이고자 했습니다.
+- **종합 판단:** 검증 및 평가 데이터에서 성능 저하가 관찰되지 않아 뚜렷한 과적합 징후는 나타나지 않았으며, 비교적 안정적인 일반화 성능을 확인했습니다. 다만 과적합이 전혀 없다고 단정할 수는 없습니다.
+
+---
+
+## 5. Streamlit 앱 개발 (호텔 예약 관리 시스템)
 
 ### ① 홈 (Home)
 - **주요 기능**: 전체 시스템의 개요와 핵심 지표를 직관적으로 파악할 수 있는 대시보드 메인 화면
@@ -314,7 +337,7 @@ https://www.youtube.com/watch?v=eDhleMZxnoE
 <img width="1917" height="857" alt="15" src="https://github.com/user-attachments/assets/a551cf20-4b02-4084-a7cd-7e8aeb47b73a" />
 https://www.youtube.com/watch?v=tz8RA_S4GzM
 
-## 5. 프로젝트 회고
+## 6. 프로젝트 회고
 
 | 팀원 이름　　　 | 회고 |
 | :--- | :--- |
