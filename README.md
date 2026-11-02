@@ -247,7 +247,7 @@
   - 날짜별 체크인 예약 분포 및 위험 등급별(높음·보통·낮음) 현황 그래프를 제공하여 취소가 집중되는 시기를 파악하고 선제적으로 대응할 수 있도록 지원
 <img width="1912" height="857" alt="2" src="https://github.com/user-attachments/assets/805443fc-967e-47a2-b71b-d22fb19dd500" />
 <img width="1910" height="840" alt="3" src="https://github.com/user-attachments/assets/3c565370-cf58-4b20-898c-204cf3bd6bce" />
-[[![오늘 현황](https://img.youtube.com/vi/LAlGetayk7s/0.jpg)](https://www.youtube.com/watch?v=LAlGetayk7s)](https://www.youtube.com/watch?v=LAlGetayk7s)
+https://www.youtube.com/watch?v=LAlGetayk7s
 <br/>
 
 ### ③ 예약 조회 (Reservation Search)
