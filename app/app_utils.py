@@ -14,10 +14,18 @@ import joblib
 import numpy as np
 import pandas as pd
 from pathlib import Path
+import zipfile
+import tempfile
 
 BASE_DIR = Path(__file__).resolve().parent
 
-MODEL_PATH = BASE_DIR / "best_stacking_modelB2.joblib"
+MODEL_PATH = BASE_DIR / "best_stacking_modelB2.joblib.zip"
+def load_model(model_path=MODEL_PATH):
+    with zipfile.ZipFile(model_path, "r") as zf:
+        with tempfile.TemporaryDirectory() as tmp:
+            path = zf.extract("best_stacking_modelB2.joblib", tmp)
+            return joblib.load(path)
+        
 DATA_PATH = BASE_DIR / "data" / "hotel_preprocessed.csv"
 # ------------------------------------------------------------
 # 설정: 최종 모델이 정해지면 여기만 바꾸면 돼요
