@@ -174,7 +174,13 @@ def load_model(model_path=MODEL_PATH):
     with zipfile.ZipFile(model_path, "r") as zf:
         with tempfile.TemporaryDirectory() as tmp:
             path = zf.extract("best_stacking_modelB2.joblib", tmp)
-            return joblib.load(path)
+            obj = joblib.load(path)
+
+    # 스태킹 딕셔너리를 예측 가능한 모델 객체로 변환
+    if isinstance(obj, dict) and "base_models" in obj:
+        return StackingModel(obj)
+
+    return obj
         
 # def load_model(path=MODEL_PATH):
 #     obj = _joblib_load(path)
