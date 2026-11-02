@@ -314,6 +314,20 @@ https://www.youtube.com/watch?v=tz8RA_S4GzM
 
 ## 5. 프로젝트 회고
 
+<style>
+table {
+  table-layout: fixed;
+  width: 100%;
+}
+
+th:first-child,
+td:first-child {
+  width: 120px;
+  min-width: 120px;
+  white-space: nowrap;
+}
+</style>
+
 | 팀원&nbsp;&nbsp;&nbsp;&nbsp;이름&nbsp; | 회고 |
 | :--- | :--- |
 | **오원아&nbsp;**  | 팀원들과 모여 데이터 수집 및 주제를 선정하고 전처리를 하고 고도화를 하며 머신러닝 데이터 분석 하는 것에 점점 빠져들었습니다. 특성 중요도를 분석해 호텔이 이탈률이 높은 고객들을 방지하는 호텔 예약 취소 위험 관리 프로모션 또한 기획하며 정말 호텔에서 일하는 직원 같이 느껴지기도 하였습니다. 특히 저는 Random Forest 모델링을 맡았는데 제 부분이 고도화하는 시간이 오래 걸리는 이슈가 발생했지만, 다른 팀원들 모두가 잘 기다려 주었고 결국 고도화가 완료되어 Decision Tree, Logistic Regression, Random Forest, XGBoost, Stacking B 5가지 모델의 최종 성능 비교를 완료하여 그 중 1순위인 Stacking B 모델을 선정 할 수 있었습니다. <br> 제가 팀장이였지만 사실 모두가 함께 팀을 이끌었기 때문에 잘 화합 할 수 있었습니다. 각자의 의견이 있으면 서로 경청하고 소통하며 의견을 조율하며 나아 갈 수 있었습니다. 그 누구도 소외되지 않고 모두가 함께 즐겁게 프로젝트에 임할 수 있어서 뜻깊은 프로젝트가 된 것 같습니다. 멋진 팀워크를 발휘해 주신 팀원들 모두에게 큰 박수를 돌립니다. |
