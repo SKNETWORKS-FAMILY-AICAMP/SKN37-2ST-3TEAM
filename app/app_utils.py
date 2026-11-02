@@ -20,11 +20,7 @@ import tempfile
 BASE_DIR = Path(__file__).resolve().parent
 
 MODEL_PATH = BASE_DIR / "best_stacking_modelB2.joblib.zip"
-def load_model(model_path=MODEL_PATH):
-    with zipfile.ZipFile(model_path, "r") as zf:
-        with tempfile.TemporaryDirectory() as tmp:
-            path = zf.extract("best_stacking_modelB2.joblib", tmp)
-            return joblib.load(path)
+
         
 DATA_PATH = BASE_DIR / "data" / "hotel_preprocessed.csv"
 # ------------------------------------------------------------
@@ -174,12 +170,17 @@ def _joblib_load(path):
     finally:
         xgb.Booster.__setstate__ = original
 
-
-def load_model(path=MODEL_PATH):
-    obj = _joblib_load(path)
-    if isinstance(obj, dict) and "base_models" in obj:   # 스태킹 딕셔너리 → 감싸기
-        return StackingModel(obj)
-    return obj
+def load_model(model_path=MODEL_PATH):
+    with zipfile.ZipFile(model_path, "r") as zf:
+        with tempfile.TemporaryDirectory() as tmp:
+            path = zf.extract("best_stacking_modelB2.joblib", tmp)
+            return joblib.load(path)
+        
+# def load_model(path=MODEL_PATH):
+#     obj = _joblib_load(path)
+#     if isinstance(obj, dict) and "base_models" in obj:   # 스태킹 딕셔너리 → 감싸기
+#         return StackingModel(obj)
+#     return obj
 
 
 def model_features(model):
