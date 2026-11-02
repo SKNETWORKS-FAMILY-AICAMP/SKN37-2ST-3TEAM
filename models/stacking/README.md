@@ -1,6 +1,7 @@
 
 
-# Stacking 모델 학습 및 성능 분석 (최종 선정 · Stacking B) · 한승아님
+# Stacking 모델 학습 및 성능 분석 
+(최종 선정 · Stacking B) · 한승아님
 
 ## 1. 모델 개요
 
