@@ -22,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent
 MODEL_PATH = BASE_DIR / "best_stacking_modelB2.joblib.zip"
 
         
-DATA_PATH = BASE_DIR / "data" / "hotel_preprocessed.csv"
+DATA_PATH = BASE_DIR / "data" / "processed" /  "hotel_preprocessed.csv"
 # ------------------------------------------------------------
 # 설정: 최종 모델이 정해지면 여기만 바꾸면 돼요
 # ------------------------------------------------------------
