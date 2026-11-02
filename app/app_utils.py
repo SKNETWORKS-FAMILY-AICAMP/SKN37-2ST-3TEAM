@@ -13,12 +13,17 @@ import struct
 import joblib
 import numpy as np
 import pandas as pd
+from pathlib import Path
 
+BASE_DIR = Path(__file__).resolve().parent
+
+MODEL_PATH = BASE_DIR / "best_stacking_modelB2.joblib"
+DATA_PATH = BASE_DIR / "data" / "hotel_preprocessed.csv"
 # ------------------------------------------------------------
 # 설정: 최종 모델이 정해지면 여기만 바꾸면 돼요
 # ------------------------------------------------------------
-MODEL_PATH = "best_stacking_modelB2.joblib"   # 최종 선정 모델 (스태킹 B, 연도 제외) · TeamProject2 폴더에 둠
-DATA_PATH = "hotel_preprocessed.csv"     # 공통 전처리 결과
+#MODEL_PATH = "best_stacking_modelB2.joblib"   # 최종 선정 모델 (스태킹 B, 연도 제외) · TeamProject2 폴더에 둠
+#DATA_PATH = "hotel_preprocessed.csv"     # 공통 전처리 결과
 MODEL_LABEL = "Stacking B"   # 화면에 보여줄 모델 이름 (팀 최종 선정 모델)
 THRESHOLD = 0.50      # 이 확률 이상이면 "취소 예측" — 스태킹 B 담당자가 정한 임계값으로 바꿀 것
 HIGH = 0.70           # 이 확률 이상이면 위험 "높음"
